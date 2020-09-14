@@ -1,20 +1,39 @@
 import React from 'react'
-import { StyleSheet, Text, StatusBar, View } from 'react-native'
+import { Provider } from 'react-redux'
+import store from './app/store'
+import { AppLoading } from 'expo'
+import Navigation from './app/navigation'
 
 export default function App() {
 	return (
-		<View style={styles.container}>
-			<Text>WELCOME TO CODETRACKER</Text>
-			<StatusBar setHidden={false} />
-		</View>
+		<Provider store={store}>
+			<Navigation />
+		</Provider>
 	)
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-})
+// import React from 'react'
+// import { StyleSheet, Text, StatusBar, View } from 'react-native'
+// import AppNav from './app/navigation/AppNav'
+// import { NavigationContainer } from '@react-navigation/native'
+
+// export default function App() {
+// 	return (
+// 		<NavigationContainer>
+// 			<View style={styles.container}>
+// 				<Text>WELCOME TO CODETRACKER</Text>
+// 				<AppNav />
+// 				<StatusBar setHidden={false} />
+// 			</View>
+// 		</NavigationContainer>
+// 	)
+// }
+
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 		backgroundColor: '#fff',
+// 		alignItems: 'center',
+// 		justifyContent: 'center',
+// 	},
+// })
