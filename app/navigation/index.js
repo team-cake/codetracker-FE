@@ -23,7 +23,13 @@ function RootNavigator() {
 				<Stack.Screen name='AuthNav' component={AuthNav} />
 			)}
 			{user && user.token && <Stack.Screen name='AppNav' component={AppNav} />} */}
+			{/* When the user is able to log in, we will use above logic */}
+
+			<Stack.Screen name='AuthNav' component={AuthNav} />
+			{/* This one is for the login and sign up */}
+
 			<Stack.Screen name='AppNav' component={AppNav} />
+			{/* this one is for the dashboard etc */}
 		</Stack.Navigator>
 	)
 }
