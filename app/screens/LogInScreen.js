@@ -10,10 +10,19 @@ export default function LogInScreen() {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	console.log('user => ', user)
+	const token = useSelector(selectToken);
+	console.log('token => ', token)
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [loading, setLoading] = useState(false)
 	const [showError, setShowError] = useState('')
+
+	// useEffect(() => {
+  //   console.log(token);
+  //   if (token !== null) {
+  //     navigation.push("AppNav");
+  //   }
+  // }, [token, navigation]);
 
 	async function onPress(event) {
 		console.log("hi");
