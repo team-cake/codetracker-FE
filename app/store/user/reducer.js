@@ -1,20 +1,21 @@
 import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID } from './actions'
+import { AsyncStorage} from "react-native"
 
 const initialState = {
-	token: null,
-	data: null,
+  token: AsyncStorage.getItem("token"),
+	name: null,
+	email: null,
 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case LOGIN_SUCCESS:
-			return {
-				token: action.payload.token,
-				data: action.payload.user,
-			}
+			AsyncStorage.setItem("token", action.payload.token);
+			return { ...state, ...action.payload };
 
 		case LOG_OUT:
-			return initialState
+      AsyncStorage.removeItem("token");
+      return { ...initialState, token: null };
 
 		case TOKEN_STILL_VALID:
 			return { ...state, ...action.payload }
