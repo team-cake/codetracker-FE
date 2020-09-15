@@ -29,7 +29,8 @@ function RootNavigator() {
       {/* <Stack.Screen name='AuthNav' component={AuthNav} /> */}
       {/* This one is for the login and sign up */}
 
-      {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
+      <Stack.Screen name="AuthNav" component={AuthNav} />
+      {/* This one is for the login and sign up */}
 
       <Stack.Screen name="AppNav" component={AppNav} />
       <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />

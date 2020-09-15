@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 
 export default function TopicDetailScreen({ route, navigation }) {
   const { id } = route.params;
-  console.log("TopicDetailScreen -> id", id);
+
   return (
     <View style={styles.container}>
       <Text>
