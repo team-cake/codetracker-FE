@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Button, View, Linking } from "react-native";
 import { fetchTopics } from "../store/topics/actions";
 import { selectTopics } from "../store/topics/selectors";
 
-export default function TopicListScreen() {
+// import { Button } from "monalisa-ui";
+
+export default function TopicListScreen({ navigation }) {
   const dispatch = useDispatch();
   const { topics } = useSelector(selectTopics);
   // console.log("TopicListScreen -> topics", topics);
@@ -16,7 +18,12 @@ export default function TopicListScreen() {
   return (
     <View style={styles.container}>
       {topics.map((t) => {
-        return <Text>{t.name}</Text>;
+        return (
+          <Button
+            title={t.name}
+            onPress={() => navigation.navigate("TopicDetail")}
+          />
+        );
       })}
     </View>
   );
