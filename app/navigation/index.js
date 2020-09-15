@@ -29,7 +29,7 @@ function RootNavigator() {
       {/* <Stack.Screen name='AuthNav' component={AuthNav} /> */}
       {/* This one is for the login and sign up */}
 
-      <Stack.Screen name="AuthNav" component={AuthNav} />
+      {/* <Stack.Screen name="AuthNav" component={AuthNav} /> */}
       {/* This one is for the login and sign up */}
 
       <Stack.Screen name="AppNav" component={AppNav} />
