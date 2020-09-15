@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export default function ToDoDetailScreen() {
+export default function TopicListScreen() {
 	return (
 		<View style={styles.container}>
-			<Text>ToDoDetailScreen</Text>
+			<Text>TopicListScreen</Text>
 		</View>
 	)
 }

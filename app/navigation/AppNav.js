@@ -3,7 +3,7 @@ import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialIcons } from '@expo/vector-icons'
 import DashboardScreen from '../screens/DashboardScreen'
-import ToDoListScreen from '../screens/ToDoListScreen'
+import TopicListScreen from '../screens/TopicListScreen'
 import SummaryListScreen from '../screens/SummaryListScreen'
 
 import SettingScreen from '../screens/SettingScreen'
@@ -15,8 +15,8 @@ export default function AppNav() {
 		<Tab.Navigator initialRouteName='Dashboard'>
 			<Tab.Screen
 				lazy={false}
-				name='To Do List'
-				component={ToDoListScreen}
+				name='Topic List'
+				component={TopicListScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<MaterialIcons name='assignment' color={color} size={size} />
@@ -25,7 +25,7 @@ export default function AppNav() {
 			/>
 			<Tab.Screen
 				lazy={false}
-				name='DashBoard'
+				name='Dashboard'
 				component={DashboardScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
