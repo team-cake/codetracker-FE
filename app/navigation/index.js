@@ -29,6 +29,8 @@ function RootNavigator() {
 			{/* This one is for the login and sign up */}
 
 			<Stack.Screen name='AppNav' component={AppNav} />
+			<Stack.Screen name='TopicDetail' component={TopicDetailScreen} />
+			<Stack.Screen name='Topics' component={TopicListScreen} />
 			{/* this one is for the dashboard etc, comment out line 28 and refresh if you want to see dashboard etc */}
 		</Stack.Navigator>
 	)
