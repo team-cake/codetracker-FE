@@ -1,3 +1,3 @@
 export const getSummaries = (reduxState) => {
-	return reduxState.summary
+	return reduxState.summary.summaries
 }
