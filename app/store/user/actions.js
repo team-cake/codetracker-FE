@@ -26,7 +26,6 @@ const tokenStillValid = (userWithoutToken) => ({
 
 export const logOut = () => ({ type: LOG_OUT })
 
-
 // export const signUp = (name, surname, classNumber, email, password, image) => {
 //   console.log("INSIDE SIGNUP FUNCTION", {
 //     {name},
@@ -35,7 +34,7 @@ export const logOut = () => ({ type: LOG_OUT })
 //     {email},
 //     {password},
 //     {image},
-    
+
 //   })
 //   return async (dispatch, getState) => {
 //     dispatch(appLoading());
