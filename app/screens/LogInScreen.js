@@ -9,9 +9,9 @@ export default function LogInScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  console.log("user => ", user);
+  // console.log("user => ", user);
   const token = useSelector(selectToken);
-  console.log("token => ", token);
+  // console.log("token => ", token);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export default function LogInScreen() {
   // }, [token, navigation]);
 
   async function onPress(event) {
-    console.log("hi");
+    // console.log("hi");
     event.preventDefault();
 
     dispatch(login(email, password));
