@@ -20,8 +20,13 @@ export default function TopicListScreen({ navigation }) {
       {topics.map((t) => {
         return (
           <Button
+            key={t.id}
             title={t.name}
-            onPress={() => navigation.navigate("TopicDetail")}
+            onPress={() =>
+              navigation.navigate("TopicDetail", {
+                id: t.id,
+              })
+            }
           />
         );
       })}
