@@ -1,24 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { StyleSheet, Button, View, PickerIOSBase } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { fetchTopics } from "../store/topics/actions";
 import { selectTopics } from "../store/topics/selectors";
-// import { Button } from "monalisa-ui";
+import { Button } from "monalisa-ui";
 import RNPickerSelect from "react-native-picker-select";
 
 export default function TopicListScreen({ navigation }) {
   const dispatch = useDispatch();
   const { topics } = useSelector(selectTopics);
-  console.log("TopicListScreen -> topics", topics);
+  const [newTopics, setTopics] = useState([]);
 
   useEffect(() => {
     dispatch(fetchTopics());
   }, [dispatch]);
 
+  function filteringTopics(e) {
+    if (e === "Select an item..." || undefined) {
+      setTopics([topics]);
+    } else {
+      const weekId = e;
+      const filteredTopics = topics.filter((t) => {
+        return Number(t.week) === parseInt(weekId);
+      });
+      setTopics(filteredTopics);
+    }
+  }
   const Dropdown = () => {
     return (
       <RNPickerSelect
-        onValueChange={(value) => console.log(value)}
+        onValueChange={filteringTopics}
         items={[
           { label: "Week 1", value: "1" },
           { label: "Week 2", value: "2" },
@@ -35,26 +46,27 @@ export default function TopicListScreen({ navigation }) {
       />
     );
   };
+
   return (
     <View style={styles.container}>
       {Dropdown()}
-      {topics.map((t) => {
-        console.log("TopicListScreen -> t", t);
-
-        return (
-          <View>
-            <Button
-              key={t.id}
-              title={t.name}
-              onPress={() =>
-                navigation.navigate("TopicDetail", {
-                  id: t.id,
-                })
-              }
-            />
-          </View>
-        );
-      })}
+      {newTopics
+        ? newTopics.map((t) => {
+            return (
+              <View>
+                <Button
+                  key={t.id}
+                  title={t.name}
+                  onPress={() =>
+                    navigation.navigate("TopicDetail", {
+                      id: t.id,
+                    })
+                  }
+                />
+              </View>
+            );
+          })
+        : null}
     </View>
   );
 }
