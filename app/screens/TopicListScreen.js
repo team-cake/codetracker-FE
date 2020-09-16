@@ -62,6 +62,7 @@ export default function TopicListScreen({ navigation }) {
                       id: t.id,
                     })
                   }
+                  outline
                 />
               </View>
             );
