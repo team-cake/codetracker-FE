@@ -5,11 +5,14 @@ import { fetchTopicById } from "../store/topicDetails/actions";
 import { fetchUserTopics } from "../store/userTopics/actions";
 import { selectTopicDetails } from "../store/topicDetails/selectors";
 import { Button, Card, Divider } from "monalisa-ui";
+import { selectUserTopics } from "../store/userTopics/selectors";
 
 export default function TopicDetailScreen({ route, navigation }) {
   const { id } = route.params;
   const dispatch = useDispatch();
   const topic = useSelector(selectTopicDetails);
+  const { userTopics } = useSelector(selectUserTopics);
+  console.log("TopicDetailScreen -> userTopics", userTopics);
 
   useEffect(() => {
     dispatch(fetchTopicById(id));
@@ -21,6 +24,17 @@ export default function TopicDetailScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <Card bordered rounded>
+        <Text>
+          🚀{" "}
+          {userTopics.map((t) => {
+            return t.id;
+          })}
+        </Text>
+        <Divider bgColor="#ff0000" />
+        <Text> </Text>
+      </Card>
+
       <Card bordered rounded>
         <Text>🚀 {topic.name}</Text>
         <Divider bgColor="#ff0000" />
