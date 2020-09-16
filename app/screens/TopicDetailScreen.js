@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTopicById } from "../store/topicDetails/actions";
+import { fetchUserTopics } from "../store/userTopics/actions";
 import { selectTopicDetails } from "../store/topicDetails/selectors";
 import { Button, Card, Divider } from "monalisa-ui";
 
@@ -13,6 +14,10 @@ export default function TopicDetailScreen({ route, navigation }) {
   useEffect(() => {
     dispatch(fetchTopicById(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(fetchUserTopics());
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>

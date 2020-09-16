@@ -17,7 +17,7 @@ export default function TopicListScreen({ navigation }) {
 
   function filteringTopics(e) {
     if (e === "Select an item..." || undefined) {
-      setTopics([topics]);
+      setTopics([]);
     } else {
       const weekId = e;
       const filteredTopics = topics.filter((t) => {
