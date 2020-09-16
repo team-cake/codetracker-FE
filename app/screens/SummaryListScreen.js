@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { fetchSummaries } from '../store/summary/actions'
 import { selectSummaries } from '../store/summary/selectors'
 import { selectUserSummaries } from '../store/user/selectors'
 import { selectUser } from '../store/user/selectors'
-import { Button } from 'monalisa-ui'
+import { Button, CheckBox, Spinner } from 'monalisa-ui'
 
 export default function SummaryListScreen({ navigation }) {
 	const dispatch = useDispatch()
@@ -25,7 +25,7 @@ export default function SummaryListScreen({ navigation }) {
 		<View style={styles.container}>
 			<Text style={styles.small}>SummaryListScreen - hey TEAM PREMIER</Text>
 			<View style={{ height: 20 }} />
-			<Text>Below is all summaries</Text>
+			<Text>Below are the summaries of all users</Text>
 			{summaries ? (
 				summaries.map((s) => {
 					return (
@@ -41,7 +41,7 @@ export default function SummaryListScreen({ navigation }) {
 					)
 				})
 			) : (
-				<Text>Loading...</Text>
+				<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
 			)}
 			<View style={{ height: 20 }} />
 			<Text>Here below is {user.name}'s summary</Text>
@@ -60,8 +60,9 @@ export default function SummaryListScreen({ navigation }) {
 					)
 				})
 			) : (
-				<Text>Loading...</Text>
+				<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
 			)}
+			<View style={{ height: 220 }} />
 		</View>
 	)
 }
