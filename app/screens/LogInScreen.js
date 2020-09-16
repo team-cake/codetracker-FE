@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { login } from "../store/user/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, selectToken } from "../store/user/selectors";
-import { Button } from "monalisa-ui";
+// import { Button } from "monalisa-ui";
 
 export default function LogInScreen() {
   const navigation = useNavigation();
@@ -31,7 +31,7 @@ export default function LogInScreen() {
 
     dispatch(login(email, password));
     if (token !== null) {
-      navigation.push("Dashboard");
+      navigation.push("AppNav");
     }
     setEmail("");
     setPassword("");

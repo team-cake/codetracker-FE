@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
+import { selectUser } from '../store/user/selectors'
 import AuthNav from "./AuthNav";
 import AppNav from "./AppNav";
 import TopicDetailScreen from "../screens/TopicDetailScreen";
@@ -18,7 +19,7 @@ export default function Navigation() {
 const Stack = createStackNavigator();
 
 function RootNavigator() {
-  const user = useSelector((state) => state.user);
+  const user = useSelector(selectUser);
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/* {(!user || !user.token) && (

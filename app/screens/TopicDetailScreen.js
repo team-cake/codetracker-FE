@@ -18,7 +18,7 @@ export default function TopicDetailScreen({ route, navigation }) {
       <Text> {topic.description}</Text>
       <Button
         title="Back to Topics"
-        onPress={() => navigation.push("Topics")}
+        onPress={() => navigation.push("AppNav")}
       />
     </View>
   );
