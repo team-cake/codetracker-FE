@@ -5,6 +5,8 @@ import { selectUser } from '../store/user/selectors'
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
 import { signUp } from '../store/user/actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as ImagePicker from 'expo-image-picker'
+import Axios from 'axios'
 
 export default function SignUpScreen() {
 	const [name, setName] = useState('')
@@ -12,12 +14,62 @@ export default function SignUpScreen() {
 	const [classNumber, setClassNumber] = useState()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [selectedImage, setSelectedImage] = useState('')
 	const [image, setImage] = useState('')
 	const [showError, setShowError] = useState('')
 	const [loading, setLoading] = useState(false)
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	const navigation = useNavigation()
+	const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/codetracker/image/upload';
+
+  const openImagePickerAsync = async () => {
+    const permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true
+    });
+
+    if (pickerResult.cancelled === true) {
+      return;
+		}
+		console.log("PICKERRESULT:", pickerResult)
+		setSelectedImage({ localUri: pickerResult.uri });
+		console.log("SELECTED IMAGE", selectedImage)
+		
+		//***IMPORTANT*** This step is necessary.  It converts image from 
+		//file path format that imagePicker creates, into a form that cloudinary //requires.
+
+		const base64Img = `${pickerResult.uri}`;
+		console.log("BASE 64 IMAGE:", base64Img)
+
+    const data = {
+      "file": base64Img,
+      "upload_preset": "CodeTracker",
+    }
+
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(async r => {
+			console.log("R Here: ", r)
+			const data = await r.json()
+			console.log("Data Here:", data)
+			console.log("Data url:", data.secure_url)
+			const dataUrl = data.secure_url
+			setImage(dataUrl);
+			console.log("data url at the end:", dataUrl)
+		}).catch(err => console.log(err))
+  };
 
 	async function onPress(event) {
 		// event.preventDefault();
@@ -93,10 +145,10 @@ export default function SignUpScreen() {
 						/>
 						<View style={{ height: 10 }} />
 
-						<TextInput
-							onChange={(event) => setImage(event.target.value)}
-							value={image}
-							placeholder='Image'
+						<Button
+							onPress={openImagePickerAsync}
+							// value={selectedImage}
+							title="Choose a profile picture"
 						/>
 						<View style={{ height: 5 }} />
 						<View style={{ height: 10 }}>
@@ -110,8 +162,8 @@ export default function SignUpScreen() {
 						</View>
 						<View style={{ height: 20 }} />
 						<Button
-							title={loading ? 'Loading...' : 'Sign up'}
-							onPress={() =>
+							title={!image || !name || !surname || !classNumber || !email || !password ? 'Please enter your details...' : 'Sign up'}
+							onPress={() => image ? 
 								onPress(
 									name,
 									surname,
@@ -120,7 +172,7 @@ export default function SignUpScreen() {
 									password,
 									image,
 									
-								)
+								) : null
 							}
 						/>
 						<View style={{ height: 20 }} />
