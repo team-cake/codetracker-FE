@@ -42,7 +42,6 @@ export default function LogInScreen() {
       <View style={{ height: 20 }} />
       <View style={{ width: 250 }}>
         <TextInput
-          style={styles.textInputLogin}
           onChange={(event) => setEmail(event.target.value)}
           value={email}
           autoCapitalize="none"
@@ -53,7 +52,6 @@ export default function LogInScreen() {
         <View style={{ height: 10 }} />
 
         <TextInput
-          style={styles.textInputLogin}
           onChange={(event) => setPassword(event.target.value)}
           value={password}
           autoCapitalize="none"
