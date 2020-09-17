@@ -1,6 +1,7 @@
 import React from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut } from '../store/user/actions'
 import { selectUser, selectUserSummaries } from '../store/user/selectors'
 import {
 	Avatar,
@@ -24,6 +25,11 @@ export default function DashboardScreen({ navigation }) {
 	console.log('DashboardScreen -> summary', summary)
 	const topic = useSelector(selectTopics)
 
+	const dispatch = useDispatch()
+
+	function onPress() {
+		dispatch(logOut())
+	}
 	return (
 		<ScrollView>
 			<View style={styles.container}>
@@ -67,24 +73,7 @@ export default function DashboardScreen({ navigation }) {
 					<Text style={styles.smallText}>Your progress</Text>
 					<View style={{ height: 20 }} />
 				</View>
-				<View>
-					<Row content='space-between'>
-						<Pricing
-							titleColor='#3e50fa'
-							title='Topic this week'
-							// price='$0'
-							info={['Topic1', 'topic2', 'Topic3']}
-							button={{ title: 'Check for details' }}
-						/>
-						<Pricing
-							titleColor='#ff0000'
-							title='Your summaries'
-							// price='$25'
-							info={['Summary 1', 'Summary 2', 'Summary 3']}
-							button={{ title: 'Add summaries' }}
-						/>
-					</Row>
-				</View>
+
 				<View>
 					<Row content='space-between'>
 						<Card
@@ -158,12 +147,22 @@ export default function DashboardScreen({ navigation }) {
 									title='See Summary List'
 									outline
 									raised
-									onPress={() => navigation.navigate('SummaryList')}
+									onPress={() => navigation.navigate('Summaries')}
 								/>
 							</Col>
 						</Card>
 					</Row>
 				</View>
+				<View style={{ height: 20 }} />
+
+				<Button
+					buttonStyle={styles.btn}
+					title='Log Out'
+					outline
+					raised
+					onPress={() => onPress(logOut())}
+				/>
+				<View style={{ height: 500 }} />
 			</View>
 		</ScrollView>
 	)
