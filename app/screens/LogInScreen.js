@@ -13,8 +13,8 @@ export default function LogInScreen() {
   // console.log("user => ", user);
   const token = useSelector(selectToken);
   // console.log("token => ", token);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("odette@test.com");
+  const [password, setPassword] = useState("Odette");
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState("");
 
