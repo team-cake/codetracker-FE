@@ -18,14 +18,15 @@ import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
 
+
 export default function DashboardScreen({ navigation }) {
+	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	console.log('DashboardScreen -> user', user)
 	const summary = useSelector(selectUserSummaries)
 	console.log('DashboardScreen -> summary', summary)
 	const topic = useSelector(selectTopics)
 
-	const dispatch = useDispatch()
 
 	function onPress() {
 		dispatch(logOut())
@@ -50,14 +51,14 @@ export default function DashboardScreen({ navigation }) {
 					{user ? (
 						<Row>
 							<Avatar
-								source={{ uri: 'https://bit.ly/35GCvFz' }}
+								source={{ uri: user.image }}
 								width={80}
 								height={80}
 								circle
 							/>
 							<Col>
 								<Text style={styles.titleText}>
-									Welcome back {user.name} - class {user.classNumber}!
+									Welcome {user.name} - class {user.classNumber}!
 								</Text>
 								<Text style={styles.datetimeText}>
 									{moment().format('MMM Do YYYY')} - {moment().format('LT')}
@@ -160,7 +161,9 @@ export default function DashboardScreen({ navigation }) {
 					title='Log Out'
 					outline
 					raised
-					onPress={() => onPress(logOut())}
+					onPress={() => onPress(logOut())
+          navigation.push("/login")
+          }
 				/>
 				<View style={{ height: 500 }} />
 			</View>
