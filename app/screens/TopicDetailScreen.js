@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTopicById } from "../store/topicDetails/actions";
@@ -17,6 +17,7 @@ export default function TopicDetailScreen({ route, navigation }) {
   const { topics } = useSelector(selectTopics);
   const topic = useSelector(selectTopicDetails);
   const { userTopics } = useSelector(selectUserTopics);
+  const [topicName, setTopicName] = useState(" ");
 
   useEffect(() => {
     dispatch(fetchTopicById(id));
@@ -26,6 +27,17 @@ export default function TopicDetailScreen({ route, navigation }) {
   useEffect(() => {
     dispatch(fetchUserTopics());
   }, [dispatch]);
+
+  // let mappedTopics = userTopics
+  //   ? userTopics.map((t) => {
+  //       const hello = topics
+  //         ? topics.find((top) => {
+  //             return parseInt(top.id) === parseInt(t.topicId);
+  //           })
+  //         : null;
+
+  //     })
+  //   : null;
 
   return (
     <View style={styles.container}>
@@ -39,9 +51,12 @@ export default function TopicDetailScreen({ route, navigation }) {
                     return parseInt(top.id) === parseInt(t.topicId);
                   })
                 : null;
+
               return (
                 <View>
-                  <Text>{newTopic.name}</Text>
+                  <Text>
+                    {newTopic && newTopic.name ? newTopic.name : null}
+                  </Text>
                   <Text>Is it done? {t.isDone ? "yes" : "no"}</Text>
                 </View>
               );

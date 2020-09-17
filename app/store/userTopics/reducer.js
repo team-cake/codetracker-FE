@@ -9,6 +9,11 @@ export default (state = initialState, action) => {
         ...state,
         userTopics: action.payload,
       };
+    case "ADD_USER_TOPIC":
+      return {
+        ...state,
+        userTopics: [...state.userTopics, action.payload],
+      };
 
     default:
       return state;
