@@ -26,44 +26,43 @@ const tokenStillValid = (userWithoutToken) => ({
 
 export const logOut = () => ({ type: LOG_OUT })
 
-// export const signUp = (name, surname, classNumber, email, password, image) => {
-//   console.log("INSIDE SIGNUP FUNCTION", {
-//     {name},
-//     {surname},
-//     {classNumber},
-//     {email},
-//     {password},
-//     {image},
+export const signUp = (name, surname, classNumber, email, password, image) => {
+  console.log("INSIDE SIGNUP FUNCTION", {
+    name,
+    surname,
+    classNumber,
+    email,
+    password,
+    image,
+  })
+  return async (dispatch, getState) => {
+    dispatch(appLoading());
+    try {
+      const response = await axios.post(`${apiUrl}/signup`, {
+        name,
+        surname,
+        classNumber,
+        email,
+        password,
+        image
+      });
 
-//   })
-//   return async (dispatch, getState) => {
-//     dispatch(appLoading());
-//     try {
-//       const response = await axios.post(`${apiUrl}/signup`, {
-//         name,
-//         surname,
-//         classNumber,
-//         email,
-//         password,
-//         image
-//       });
-
-//       console.log("RESPONSE DATA", response.data)
-//       dispatch(loginSuccess(response.data));
-//       dispatch(showMessageWithTimeout("success", true, "account created"));
-//       dispatch(appDoneLoading());
-//     } catch (error) {
-//       if (error.response) {
-//         console.log(error.response.data.message);
-//         dispatch(setMessage("danger", true, error.response.data.message));
-//       } else {
-//         console.log(error.message);
-//         dispatch(setMessage("danger", true, error.message));
-//       }
-//       dispatch(appDoneLoading());
-//     }
-//   };
-// };
+      console.log("RESPONSE DATA", response.data)
+      dispatch(loginSuccess(response.data));
+      dispatch(showMessageWithTimeout("success", true, "account created"));
+      dispatch(appDoneLoading());
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message);
+        dispatch(setMessage("danger", true, error.response.data.message));
+      } else {
+        console.log(error.message);
+        dispatch(setMessage("danger", true, error.message));
+      }
+      dispatch(appDoneLoading());
+    }
+  };
+};
 
 export const login = (email, password) => {
 	console.log(email, password)
