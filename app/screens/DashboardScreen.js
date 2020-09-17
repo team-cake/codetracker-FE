@@ -18,19 +18,18 @@ import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
 
-
 export default function DashboardScreen({ navigation }) {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	console.log('DashboardScreen -> user', user)
+	// console.log('DashboardScreen -> user', user)
 	const summary = useSelector(selectUserSummaries)
-	console.log('DashboardScreen -> summary', summary)
+	// console.log('DashboardScreen -> summary', summary)
 	const topic = useSelector(selectTopics)
-
 
 	function onPress() {
 		dispatch(logOut())
 	}
+
 	return (
 		<ScrollView>
 			<View style={styles.container}>
@@ -161,9 +160,7 @@ export default function DashboardScreen({ navigation }) {
 					title='Log Out'
 					outline
 					raised
-					onPress={() => onPress(logOut())
-          navigation.push("/login")
-          }
+					onPress={() => onPress(logOut())}
 				/>
 				<View style={{ height: 500 }} />
 			</View>
