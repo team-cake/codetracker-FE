@@ -87,87 +87,103 @@ export default function DashboardScreen({ navigation }) {
 					<View style={{ height: 20 }} />
 				</View>
 
-				<View>
-					<Row content='space-between'>
-						<Card
-							// height={550}
-							bordered
-							rounded
-							style={{
-								width: 225,
-								height: 225,
-								shadowOffset: { width: 2, height: 2 },
-								shadowColor: '#333',
-								shadowOpacity: 0.3,
-								shadowRadius: 2,
-							}}
-						>
-							<Col>
-								<View style={{ height: 30 }} />
-								<Text style={styles.headerText}>Topics this week</Text>
-								<View style={{ height: 15 }} />
-								<Text style={styles.smallText}>Value 2</Text>
-								<Text style={styles.smallText}>Value 3</Text>
-								<View style={{ height: 20 }} />
-								<Button
-									buttonStyle={styles.btn}
-									title='Topics this week'
-									outline
-									raised
-									onPress={() => navigation.navigate('Topics')}
-								/>
-							</Col>
-						</Card>
-						<Card
-							// height={400}
-							bordered
-							rounded
-							style={{
-								width: 225,
-								height: 225,
-								shadowOffset: { width: 2, height: 2 },
-								shadowColor: '#333',
-								shadowOpacity: 0.3,
-								shadowRadius: 2,
-							}}
-						>
-							<Col>
-								<View style={{ height: 30 }} />
-								<Text style={styles.headerText}>Your Summaries</Text>
-								<View style={{ height: 15 }} />
-								{summary ? (
-									summary.map((s) => {
-										return (
-											<Button
-												key={s.id}
-												title={s.description}
-												outline
-												raised
-												onPress={() =>
-													navigation.navigate('TopicDetail', {
-														id: s.id,
-													})
-												}
-											/>
-										)
-									})
-								) : (
-									<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
-								)}
-								<View style={{ height: 20 }} />
-								<Button
-									buttonStyle={styles.btn}
-									title='See Summary List'
-									outline
-									raised
-									onPress={() => navigation.navigate('Summaries')}
-								/>
-							</Col>
-						</Card>
-					</Row>
-				</View>
-				<View style={{ height: 20 }} />
+        <View>
+          <Row content="space-between">
+            <Card
+              // height={550}
+              bordered
+              rounded
+              style={{
+                width: 225,
+                height: 225,
+                shadowOffset: { width: 2, height: 2 },
+                shadowColor: "#333",
+                shadowOpacity: 0.3,
+                shadowRadius: 2,
+              }}
+            >
+              <Col>
+                <View style={{ height: 30 }} />
+                <Text style={styles.headerText}>Topics this week</Text>
+                <View style={{ height: 15 }} />
+                <Text style={styles.smallText}>Value 2</Text>
+                <Text style={styles.smallText}>Value 3</Text>
+                <View style={{ height: 20 }} />
+                <Button
+                  buttonStyle={styles.btn}
+                  title="Topics this week"
+                  outline
+                  raised
+                  onPress={() => navigation.navigate("Topics")}
+                />
+              </Col>
+            </Card>
+            <Card
+              // height={400}
+              bordered
+              rounded
+              style={{
+                width: 225,
+                height: 225,
+                shadowOffset: { width: 2, height: 2 },
+                shadowColor: "#333",
+                shadowOpacity: 0.3,
+                shadowRadius: 2,
+              }}
+            >
+              <Col>
+                <View style={{ height: 30 }} />
+                <Text style={styles.headerText}>Your Summaries</Text>
+                <View style={{ height: 15 }} />
+                {summary ? (
+                  summary.map((s) => {
+                    return (
+                      <Button
+                        key={s.id}
+                        title={s.description}
+                        outline
+                        raised
+                        onPress={() =>
+                          navigation.navigate("TopicDetail", {
+                            id: s.id,
+                          })
+                        }
+                      />
+                    );
+                  })
+                ) : (
+                  <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
+                )}
+                <View style={{ height: 20 }} />
+                <Button
+                  buttonStyle={styles.btn}
+                  title="See Summary List"
+                  outline
+                  raised
+                  onPress={() => navigation.navigate("Summaries")}
+                />
+              </Col>
+            </Card>
+          </Row>
+        </View>
+        <View style={{ height: 20 }} />
 
+<<<<<<< HEAD
+        <Button
+          buttonStyle={styles.btn}
+          title="Log Out"
+          outline
+          raised
+          onPress={
+            () => onPress(logOut())
+            // navigation.push("/login")
+          }
+        />
+        <View style={{ height: 500 }} />
+      </View>
+    </ScrollView>
+  );
+=======
 				<Button
 					buttonStyle={styles.btn}
 					title='Log Out'
@@ -179,50 +195,51 @@ export default function DashboardScreen({ navigation }) {
 			</View>
 		</ScrollView>
 	)
+>>>>>>> b726de817c4097bbc5cf60d918a2489def71eb9a
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	datetimeText: {
-		// fontFamily: 'Roboto-Light',
-		fontSize: 15,
-		marginBottom: 10,
-	},
-	titleText: {
-		// fontFamily: 'Roboto-Light',
-		fontSize: 25,
-		marginBottom: 10,
-		textAlign: 'center',
-	},
-	headerText: {
-		// fontFamily: 'Roboto-Light',
-		color: '#1b48ee',
-		fontSize: 20,
-		marginBottom: 10,
-		textAlign: 'center',
-	},
-	smallText: {
-		// fontFamily: 'Roboto-Light',
-		fontSize: 15,
-		// marginBottom: 10,
-		textAlign: 'center',
-	},
-	card: {
-		borderRadius: 6,
-		elevation: 3,
-		backgroundColor: '#fff',
-		shadowOffset: { width: 2, height: 2 },
-		shadowColor: '#333',
-		shadowOpacity: 0.3,
-		shadowRadius: 2,
-		marginHorizontal: 4,
-		marginVertical: 6,
-		width: '225',
-		height: '225',
-	},
-})
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  datetimeText: {
+    // fontFamily: 'Roboto-Light',
+    fontSize: 15,
+    marginBottom: 10,
+  },
+  titleText: {
+    // fontFamily: 'Roboto-Light',
+    fontSize: 25,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  headerText: {
+    // fontFamily: 'Roboto-Light',
+    color: "#1b48ee",
+    fontSize: 20,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  smallText: {
+    // fontFamily: 'Roboto-Light',
+    fontSize: 15,
+    // marginBottom: 10,
+    textAlign: "center",
+  },
+  card: {
+    borderRadius: 6,
+    elevation: 3,
+    backgroundColor: "#fff",
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: "#333",
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    marginHorizontal: 4,
+    marginVertical: 6,
+    width: "225",
+    height: "225",
+  },
+});
