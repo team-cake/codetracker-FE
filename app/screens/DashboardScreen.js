@@ -20,6 +20,7 @@ import { selectTopics } from '../store/topics/selectors'
 import { useDispatch } from 'react-redux'
 import { logOut } from '../store/user/actions'
 
+
 export default function DashboardScreen({ navigation }) {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
@@ -28,7 +29,6 @@ export default function DashboardScreen({ navigation }) {
 	console.log('DashboardScreen -> summary', summary)
 	const topic = useSelector(selectTopics)
 
-	const dispatch = useDispatch()
 
 	function onPress() {
 		dispatch(logOut())
