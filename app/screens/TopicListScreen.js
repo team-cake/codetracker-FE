@@ -53,9 +53,8 @@ export default function TopicListScreen({ navigation }) {
       {newTopics ? (
         newTopics.map((t) => {
           return (
-            <View>
+            <View key={t.id}>
               <Button
-                key={t.id}
                 title={t.name}
                 onPress={() =>
                   navigation.navigate("TopicDetail", {
