@@ -1,77 +1,91 @@
-import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "../store/user/actions";
-import { selectUser, selectUserSummaries } from "../store/user/selectors";
+import React, { useEffect } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut } from '../store/user/actions'
+import { selectUser, selectUserSummaries } from '../store/user/selectors'
 import {
-  Avatar,
-  Button,
-  Card,
-  Col,
-  Pricing,
-  ProgressBar,
-  Row,
-  Spinner,
-  Text,
-} from "monalisa-ui";
-import moment from "moment";
-import { ScrollView } from "react-native-gesture-handler";
-import { selectTopics } from "../store/topics/selectors";
+	Avatar,
+	Button,
+	Card,
+	Col,
+	ProgressBar,
+	Row,
+	Spinner,
+	Text,
+} from 'monalisa-ui'
+import moment from 'moment'
+import { ScrollView } from 'react-native-gesture-handler'
+import { selectTopics } from '../store/topics/selectors'
+import { selectUserTopics } from '../store/userTopics/selectors'
+import { selectTopicDetails } from '../store/topicDetails/selectors'
+import { fetchUserTopics } from '../store/userTopics/actions'
+import { fetchTopics } from '../store/topics/actions'
 
 export default function DashboardScreen({ navigation }) {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  console.log("DashboardScreen -> user", user);
-  const summary = useSelector(selectUserSummaries);
-  console.log("DashboardScreen -> summary", summary);
-  const topic = useSelector(selectTopics);
+	const dispatch = useDispatch()
+	const user = useSelector(selectUser)
+	// console.log('DashboardScreen -> user', user)
+	const summary = useSelector(selectUserSummaries)
+	// console.log('DashboardScreen -> summary', summary)
+	const { topics } = useSelector(selectTopics)
+	console.log('DashboardScreen -> topics', topics)
+	// const topic = useSelector(selectTopicDetails)
+	// console.log('DashboardScreen -> topic', topic)
+	const { userTopics } = useSelector(selectUserTopics)
+	console.log('DashboardScreen -> userTopics', userTopics)
 
-  function onPress() {
-    dispatch(logOut());
-  }
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={{ height: 20 }} />
-        <Text>this is codetracker</Text>
-        <View style={{ height: 20 }} />
-        <Card
-          bordered
-          rounded
-          style={{
-            shadowOffset: { width: 2, height: 2 },
-            shadowColor: "#333",
-            shadowOpacity: 0.3,
-            shadowRadius: 2,
-            // width: Dimensions.get('window').width,
-          }}
-        >
-          {user ? (
-            <Row>
-              <Avatar
-                source={{ uri: user.image }}
-                width={80}
-                height={80}
-                circle
-              />
-              <Col>
-                <Text style={styles.titleText}>
-                  Welcome {user.name} - class {user.classNumber}!
-                </Text>
-                <Text style={styles.datetimeText}>
-                  {moment().format("MMM Do YYYY")} - {moment().format("LT")}
-                </Text>
-              </Col>
-            </Row>
-          ) : (
-            <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
-          )}
-        </Card>
-        <View style={{ width: 400, marginTop: 10 }}>
-          <ProgressBar style={{ marginBottom: 5 }} height={10} value={80} />
-          <Text style={styles.smallText}>Your progress</Text>
-          <View style={{ height: 20 }} />
-        </View>
+	useEffect(() => {
+		dispatch(fetchUserTopics())
+		dispatch(fetchTopics())
+	}, [dispatch])
+
+	function onPress() {
+		dispatch(logOut())
+	}
+
+	return (
+		<ScrollView>
+			<View style={styles.container}>
+				<View style={{ height: 20 }} />
+				<Text>this is codetracker</Text>
+				<View style={{ height: 20 }} />
+				<Card
+					bordered
+					rounded
+					style={{
+						shadowOffset: { width: 2, height: 2 },
+						shadowColor: '#333',
+						shadowOpacity: 0.3,
+						shadowRadius: 2,
+						// width: Dimensions.get('window').width,
+					}}
+				>
+					{user ? (
+						<Row>
+							<Avatar
+								source={{ uri: user.image }}
+								width={80}
+								height={80}
+								circle
+							/>
+							<Col>
+								<Text style={styles.titleText}>
+									Welcome {user.name} - class {user.classNumber}!
+								</Text>
+								<Text style={styles.datetimeText}>
+									{moment().format('MMM Do YYYY')} - {moment().format('LT')}
+								</Text>
+							</Col>
+						</Row>
+					) : (
+						<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
+					)}
+				</Card>
+				<View style={{ width: 400, marginTop: 10 }}>
+					<ProgressBar style={{ marginBottom: 5 }} height={10} value={80} />
+					<Text style={styles.smallText}>Your progress</Text>
+					<View style={{ height: 20 }} />
+				</View>
 
         <View>
           <Row content="space-between">
@@ -154,6 +168,7 @@ export default function DashboardScreen({ navigation }) {
         </View>
         <View style={{ height: 20 }} />
 
+<<<<<<< HEAD
         <Button
           buttonStyle={styles.btn}
           title="Log Out"
@@ -168,6 +183,19 @@ export default function DashboardScreen({ navigation }) {
       </View>
     </ScrollView>
   );
+=======
+				<Button
+					buttonStyle={styles.btn}
+					title='Log Out'
+					outline
+					raised
+					onPress={() => onPress(logOut())}
+				/>
+				<View style={{ height: 500 }} />
+			</View>
+		</ScrollView>
+	)
+>>>>>>> b726de817c4097bbc5cf60d918a2489def71eb9a
 }
 
 const styles = StyleSheet.create({
