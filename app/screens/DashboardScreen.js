@@ -1,5 +1,5 @@
-import React from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../store/user/actions'
 import { selectUser, selectUserSummaries } from '../store/user/selectors'
@@ -8,7 +8,6 @@ import {
 	Button,
 	Card,
 	Col,
-	Pricing,
 	ProgressBar,
 	Row,
 	Spinner,
@@ -17,6 +16,10 @@ import {
 import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
+import { selectUserTopics } from '../store/userTopics/selectors'
+import { selectTopicDetails } from '../store/topicDetails/selectors'
+import { fetchUserTopics } from '../store/userTopics/actions'
+import { fetchTopics } from '../store/topics/actions'
 
 export default function DashboardScreen({ navigation }) {
 	const dispatch = useDispatch()
@@ -24,7 +27,17 @@ export default function DashboardScreen({ navigation }) {
 	// console.log('DashboardScreen -> user', user)
 	const summary = useSelector(selectUserSummaries)
 	// console.log('DashboardScreen -> summary', summary)
-	const topic = useSelector(selectTopics)
+	const { topics } = useSelector(selectTopics)
+	console.log('DashboardScreen -> topics', topics)
+	// const topic = useSelector(selectTopicDetails)
+	// console.log('DashboardScreen -> topic', topic)
+	const { userTopics } = useSelector(selectUserTopics)
+	console.log('DashboardScreen -> userTopics', userTopics)
+
+	useEffect(() => {
+		dispatch(fetchUserTopics())
+		dispatch(fetchTopics())
+	}, [dispatch])
 
 	function onPress() {
 		dispatch(logOut())
