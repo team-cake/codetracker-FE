@@ -8,7 +8,6 @@ const topicDetailsFetched = (topic) => ({
 export const fetchTopicById = (id) => {
   return async (dispatch, getState) => {
     const response = await axios.get(`http://localhost:4000/topics/${id}`);
-    // console.log("fetchTopicById -> response", response.data.topic);
 
     dispatch(topicDetailsFetched(response.data.topic));
   };
