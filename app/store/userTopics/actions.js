@@ -44,7 +44,8 @@ export const addingUserTopic = (topicId, userId) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      dispatch(addUserTopic(response));
+      console.log("addingUserTopic -> response", response);
+      dispatch(addUserTopic(response.data.addUserTopic));
     } catch (error) {
       console.log(error);
     }

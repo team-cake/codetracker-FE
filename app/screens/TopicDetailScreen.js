@@ -39,6 +39,17 @@ export default function TopicDetailScreen({ route, navigation }) {
   //     })
   //   : null;
 
+  const mappedTopics = !userTopics
+    ? ""
+    : userTopics.map((t) => {
+        return !topics
+          ? ""
+          : topics.find((top) => {
+              return parseInt(top.id) === parseInt(t.topicId);
+            });
+      });
+
+  console.log("TopicDetailScreen ->  mappedTopics", mappedTopics);
   return (
     <View style={styles.container}>
       <Card bordered rounded>
