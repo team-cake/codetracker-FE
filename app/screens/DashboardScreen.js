@@ -17,8 +17,6 @@ import {
 import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
-import { useDispatch } from 'react-redux'
-import { logOut } from '../store/user/actions'
 
 export default function DashboardScreen({ navigation }) {
 	const dispatch = useDispatch()
