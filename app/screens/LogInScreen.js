@@ -30,9 +30,9 @@ export default function LogInScreen() {
     event.preventDefault();
 
     dispatch(login(email, password));
-    if (token !== {}) {
-      navigation.push("AppNav");
-    }
+    // if (token !== null) {
+    //   navigation.push("AppNav");
+    // }
     setEmail("");
     setPassword("");
   }

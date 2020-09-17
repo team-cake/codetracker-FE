@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '../store/user/selectors'
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
 import { signUp } from '../store/user/actions'
+import { sendMail } from '../store/mail/actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -68,7 +69,16 @@ export default function SignUpScreen() {
 			setImage(dataUrl);
 			console.log("data url at the end:", dataUrl)
 		}).catch(err => console.log(err))
-  };
+	};
+	
+	// async function submitForm () {
+  //   try {
+  //     await dispatch(sendMail(to, user.email, subject, text))
+  //     history.push("/mail/sent")
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
 	async function onPress(event) {
 		// event.preventDefault();
@@ -82,7 +92,13 @@ export default function SignUpScreen() {
       image
     })
 
-    dispatch(signUp(name, surname, classNumber, email, password, image));
+		dispatch(signUp(name, surname, classNumber, email, password, image));
+		
+		try {
+			await dispatch(sendMail(email))
+		} catch (err) {
+			console.log("THIS IS THE ERROR:", err.message)
+		}
 
     setName("");
     setSurname("");
@@ -90,7 +106,7 @@ export default function SignUpScreen() {
     setEmail("");
     setPassword("");
 		setImage("");
-		
+
 		navigation.push("SignUpConf")
 	}
 
