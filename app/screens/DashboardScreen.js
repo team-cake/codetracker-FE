@@ -16,8 +16,11 @@ import {
 import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
+import { useDispatch } from 'react-redux'
+import { logOut } from '../store/user/actions'
 
 export default function DashboardScreen({ navigation }) {
+	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	console.log('DashboardScreen -> user', user)
 	const summary = useSelector(selectUserSummaries)
@@ -44,14 +47,14 @@ export default function DashboardScreen({ navigation }) {
 					{user ? (
 						<Row>
 							<Avatar
-								source={{ uri: 'https://bit.ly/35GCvFz' }}
+								source={{ uri: user.image }}
 								width={80}
 								height={80}
 								circle
 							/>
 							<Col>
 								<Text style={styles.titleText}>
-									Welcome back {user.name} - class {user.classNumber}!
+									Welcome {user.name} - class {user.classNumber}!
 								</Text>
 								<Text style={styles.datetimeText}>
 									{moment().format('MMM Do YYYY')} - {moment().format('LT')}
@@ -164,6 +167,16 @@ export default function DashboardScreen({ navigation }) {
 						</Card>
 					</Row>
 				</View>
+				<Button
+					buttonStyle={styles.btn}
+					title='Logout'
+					// outline
+					// raised
+					onPress={() => {
+						dispatch(logOut())
+						navigation.push("/login")
+					}}
+				/>
 			</View>
 		</ScrollView>
 	)

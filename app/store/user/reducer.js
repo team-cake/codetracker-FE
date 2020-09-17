@@ -2,7 +2,7 @@ import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID } from './actions'
 import { AsyncStorage} from "react-native"
 
 const initialState = {
-  token: AsyncStorage.getItem("token"),
+  token: null,
 	name: null,
 	email: null,
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { login } from "../store/user/actions";
@@ -10,9 +10,9 @@ export default function LogInScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  // console.log("user => ", user);
+  console.log("user => ", user);
   const token = useSelector(selectToken);
-  // console.log("token => ", token);
+  console.log("token => ", token);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function LogInScreen() {
 
   // useEffect(() => {
   //   console.log(token);
-  //   if (token !== null) {
+  //   if (token !== {}) {
   //     navigation.push("AppNav");
   //   }
   // }, [token, navigation]);
@@ -30,7 +30,7 @@ export default function LogInScreen() {
     event.preventDefault();
 
     dispatch(login(email, password));
-    if (token !== null) {
+    if (token !== {}) {
       navigation.push("AppNav");
     }
     setEmail("");

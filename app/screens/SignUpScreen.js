@@ -6,7 +6,6 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
 import { signUp } from '../store/user/actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as ImagePicker from 'expo-image-picker'
-import Axios from 'axios'
 
 export default function SignUpScreen() {
 	const [name, setName] = useState('')
@@ -90,7 +89,9 @@ export default function SignUpScreen() {
     setClassNumber();
     setEmail("");
     setPassword("");
-    setImage("");
+		setImage("");
+		
+		navigation.push("SignUpConf")
 	}
 
 	return (
