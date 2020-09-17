@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { login } from "../store/user/actions";
@@ -10,17 +10,23 @@ export default function LogInScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  // console.log("user => ", user);
+  console.log("user => ", user);
   const token = useSelector(selectToken);
+<<<<<<< HEAD
   // console.log("token => ", token);
   const [email, setEmail] = useState("odette@test.com");
   const [password, setPassword] = useState("Odette");
+=======
+  console.log("token => ", token);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+>>>>>>> 9919fd2332822614cde17bc2ebeda8343fcc2f4d
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState("");
 
   // useEffect(() => {
   //   console.log(token);
-  //   if (token !== null) {
+  //   if (token !== {}) {
   //     navigation.push("AppNav");
   //   }
   // }, [token, navigation]);
@@ -30,9 +36,9 @@ export default function LogInScreen() {
     event.preventDefault();
 
     dispatch(login(email, password));
-    if (token !== null) {
-      navigation.push("AppNav");
-    }
+    // if (token !== null) {
+    //   navigation.push("AppNav");
+    // }
     setEmail("");
     setPassword("");
   }
@@ -42,7 +48,6 @@ export default function LogInScreen() {
       <View style={{ height: 20 }} />
       <View style={{ width: 250 }}>
         <TextInput
-          style={styles.textInputLogin}
           onChange={(event) => setEmail(event.target.value)}
           value={email}
           autoCapitalize="none"
@@ -53,7 +58,6 @@ export default function LogInScreen() {
         <View style={{ height: 10 }} />
 
         <TextInput
-          style={styles.textInputLogin}
           onChange={(event) => setPassword(event.target.value)}
           value={password}
           autoCapitalize="none"

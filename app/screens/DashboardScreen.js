@@ -1,6 +1,7 @@
 import React from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut } from '../store/user/actions'
 import { selectUser, selectUserSummaries } from '../store/user/selectors'
 import {
 	Avatar,
@@ -16,14 +17,22 @@ import {
 import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
+import { useDispatch } from 'react-redux'
+import { logOut } from '../store/user/actions'
 
 export default function DashboardScreen({ navigation }) {
+	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	console.log('DashboardScreen -> user', user)
 	const summary = useSelector(selectUserSummaries)
 	console.log('DashboardScreen -> summary', summary)
 	const topic = useSelector(selectTopics)
 
+	const dispatch = useDispatch()
+
+	function onPress() {
+		dispatch(logOut())
+	}
 	return (
 		<ScrollView>
 			<View style={styles.container}>
@@ -44,14 +53,14 @@ export default function DashboardScreen({ navigation }) {
 					{user ? (
 						<Row>
 							<Avatar
-								source={{ uri: 'https://bit.ly/35GCvFz' }}
+								source={{ uri: user.image }}
 								width={80}
 								height={80}
 								circle
 							/>
 							<Col>
 								<Text style={styles.titleText}>
-									Welcome back {user.name} - class {user.classNumber}!
+									Welcome {user.name} - class {user.classNumber}!
 								</Text>
 								<Text style={styles.datetimeText}>
 									{moment().format('MMM Do YYYY')} - {moment().format('LT')}
@@ -67,24 +76,7 @@ export default function DashboardScreen({ navigation }) {
 					<Text style={styles.smallText}>Your progress</Text>
 					<View style={{ height: 20 }} />
 				</View>
-				<View>
-					<Row content='space-between'>
-						<Pricing
-							titleColor='#3e50fa'
-							title='Topic this week'
-							// price='$0'
-							info={['Topic1', 'topic2', 'Topic3']}
-							button={{ title: 'Check for details' }}
-						/>
-						<Pricing
-							titleColor='#ff0000'
-							title='Your summaries'
-							// price='$25'
-							info={['Summary 1', 'Summary 2', 'Summary 3']}
-							button={{ title: 'Add summaries' }}
-						/>
-					</Row>
-				</View>
+
 				<View>
 					<Row content='space-between'>
 						<Card
@@ -158,12 +150,24 @@ export default function DashboardScreen({ navigation }) {
 									title='See Summary List'
 									outline
 									raised
-									onPress={() => navigation.navigate('SummaryList')}
+									onPress={() => navigation.navigate('Summaries')}
 								/>
 							</Col>
 						</Card>
 					</Row>
 				</View>
+				<View style={{ height: 20 }} />
+
+				<Button
+					buttonStyle={styles.btn}
+					title='Log Out'
+					outline
+					raised
+					onPress={() => onPress(logOut())
+          navigation.push("/login")
+          }
+				/>
+				<View style={{ height: 500 }} />
 			</View>
 		</ScrollView>
 	)
