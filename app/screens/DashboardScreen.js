@@ -3,16 +3,8 @@ import { StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../store/user/actions'
 import { selectUser, selectUserSummaries } from '../store/user/selectors'
-import {
-	Avatar,
-	Button,
-	Card,
-	Col,
-	ProgressBar,
-	Row,
-	Spinner,
-	Text,
-} from 'monalisa-ui'
+import { ProgressBar, Colors } from 'react-native-paper'
+import { Avatar, Button, Card, Col, Row, Spinner, Text } from 'monalisa-ui'
 import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
@@ -35,6 +27,30 @@ export default function DashboardScreen({ navigation }) {
 	const summary = useSelector(selectUserSummaries)
 	const { topics } = useSelector(selectTopics)
 	const { userTopics } = useSelector(selectUserTopics)
+
+	useEffect(() => {
+		let totalLength = topics.length
+		console.log('DashboardScreen -> totalLength', totalLength)
+		let passedLength = 0
+		if (totalLength > 0) {
+			userTopics.forEach((topic) => {
+				if (topic.isDone) {
+					passedLength++
+				}
+			})
+			if (passedLength > 0) {
+				let val = passedLength / totalLength
+				console.log('val => ', val)
+				setProgressBar(val)
+			} else {
+				console.log('passedLength is 0')
+				setProgressBar(0)
+			}
+		} else {
+			console.log('totalLength is 0')
+			setProgressBar(0)
+		}
+	}, [userTopics])
 
 	useEffect(() => {
 		let secTimer = setInterval(() => {
@@ -104,13 +120,27 @@ export default function DashboardScreen({ navigation }) {
 						<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
 					)}
 				</Card>
-				<View style={{ width: 400, marginTop: 10 }}>
-					<ProgressBar
+				{/* <ProgressBar
 						style={{ marginBottom: 5 }}
 						height={10}
 						value={progressBar}
-					/>
-					<Text style={styles.smallText}>Your progress</Text>
+					/> */}
+
+				<View style={{ width: 400, marginTop: 10 }}>
+					<ProgressBar progress={progressBar} color={Colors.blue800} />
+					<Card>
+						<Row content='space-between'>
+							<Col>
+								<Text style={styles.smallText}>0 %</Text>
+							</Col>
+							<Col>
+								<Text style={styles.smallText}>Your progress</Text>
+							</Col>
+							<Col>
+								<Text style={styles.smallText}>100 %</Text>
+							</Col>
+						</Row>
+					</Card>
 					<View style={{ height: 20 }} />
 				</View>
 
