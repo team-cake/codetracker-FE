@@ -16,3 +16,19 @@ export const fetchSummaries = () => {
 		}
 	}
 }
+
+export const createSummary = (description, userId, topicId) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const response = await axios.post(`${apiUrl}/topics/:id`, {
+			description,
+			userId,
+			topicId
+    }, {
+      headers: { Authorization: `Bearer ${selectToken(state)}` }
+    })
+
+    console.log("RESPONSE:", response)
+  };
+};
+

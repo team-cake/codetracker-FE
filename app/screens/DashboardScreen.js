@@ -168,22 +168,6 @@ export default function DashboardScreen({ navigation }) {
         </View>
         <View style={{ height: 20 }} />
 
-<<<<<<< HEAD
-        <Button
-          buttonStyle={styles.btn}
-          title="Log Out"
-          outline
-          raised
-          onPress={
-            () => onPress(logOut())
-            // navigation.push("/login")
-          }
-        />
-        <View style={{ height: 500 }} />
-      </View>
-    </ScrollView>
-  );
-=======
 				<Button
 					buttonStyle={styles.btn}
 					title='Log Out'
@@ -195,7 +179,6 @@ export default function DashboardScreen({ navigation }) {
 			</View>
 		</ScrollView>
 	)
->>>>>>> b726de817c4097bbc5cf60d918a2489def71eb9a
 }
 
 const styles = StyleSheet.create({
