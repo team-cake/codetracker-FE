@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import { fetchTopics } from "../store/topics/actions";
 import { selectTopics } from "../store/topics/selectors";
-import { Button, Spinner } from "monalisa-ui";
+import { Button, Spinner, Card } from "monalisa-ui";
 import RNPickerSelect from "react-native-picker-select";
 
 export default function TopicListScreen({ navigation }) {
@@ -49,26 +49,39 @@ export default function TopicListScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {Dropdown()}
-      {newTopics ? (
-        newTopics.map((t) => {
-          return (
-            <View key={t.id}>
-              <Button
-                title={t.name}
-                onPress={() =>
-                  navigation.navigate("TopicDetail", {
-                    id: t.id,
-                  })
-                }
-                outline
-              />
-            </View>
-          );
-        })
-      ) : (
-        <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
-      )}
+      <Card
+        bordered
+        style={{
+          width: 250,
+          height: 200,
+          shadowOffset: { width: 2, height: 2 },
+          shadowColor: "#333",
+          shadowOpacity: 0.3,
+          shadowRadius: 2,
+          borderRadius: 6,
+        }}
+      >
+        {Dropdown()}
+        {newTopics ? (
+          newTopics.map((t) => {
+            return (
+              <View key={t.id}>
+                <Button
+                  title={t.name}
+                  onPress={() =>
+                    navigation.navigate("TopicDetail", {
+                      id: t.id,
+                    })
+                  }
+                  outline
+                />
+              </View>
+            );
+          })
+        ) : (
+          <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
+        )}
+      </Card>
     </View>
   );
 }
