@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TextInput } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTopicById } from "../store/topicDetails/actions";
 import { fetchUserTopics, addingUserTopic } from "../store/userTopics/actions";
@@ -8,6 +8,7 @@ import { selectUser } from "../store/user/selectors";
 import { selectTopicDetails } from "../store/topicDetails/selectors";
 import { Button, Card, Divider, Spinner } from "monalisa-ui";
 import { selectUserTopics } from "../store/userTopics/selectors";
+import { createSummary } from "../store/summary/actions";
 // import { utc } from "moment";
 
 export default function TopicDetailScreen({ route, navigation }) {
@@ -18,6 +19,8 @@ export default function TopicDetailScreen({ route, navigation }) {
   const topic = useSelector(selectTopicDetails);
   const { userTopics } = useSelector(selectUserTopics);
   const [topicName, setTopicName] = useState(" ");
+  const [text, setText] = useState(" ");
+  console.log("TopicDetailScreen -> text", text);
 
   useEffect(() => {
     dispatch(fetchTopicById(id));
@@ -27,6 +30,13 @@ export default function TopicDetailScreen({ route, navigation }) {
   useEffect(() => {
     dispatch(fetchUserTopics());
   }, [dispatch]);
+
+  const onPress = (event) => {
+    event.preventDefault();
+    dispatch(createSummary(text, user.id, topic.id));
+    // console.log("Text is now:", );
+    setText(" ");
+  };
 
   return (
     <View style={styles.container}>
@@ -62,6 +72,18 @@ export default function TopicDetailScreen({ route, navigation }) {
         <Text>🚀 {topic.name}</Text>
         <Divider bgColor="#ff0000" />
         <Text> {topic.description}</Text>
+      </Card>
+
+      <Card>
+        <Text>Create your summary: </Text>
+        <TextInput
+          style={{ height: 40 }}
+          placeholder="type your summary"
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+          maxLength={100}
+        />
+        <Button title="Submit Summary" onPress={onPress} />
       </Card>
       <Button
         title="Back to Topics"
