@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../store/user/actions'
@@ -17,22 +17,43 @@ import moment from 'moment'
 import { ScrollView } from 'react-native-gesture-handler'
 import { selectTopics } from '../store/topics/selectors'
 import { selectUserTopics } from '../store/userTopics/selectors'
-import { selectTopicDetails } from '../store/topicDetails/selectors'
 import { fetchUserTopics } from '../store/userTopics/actions'
 import { fetchTopics } from '../store/topics/actions'
 
+Date.prototype.getWeek = function () {
+	let today = new Date()
+	return Math.ceil(((today - this) / 86400000 + today.getDay() + 1) / 7)
+}
+
 export default function DashboardScreen({ navigation }) {
+	const [progressBar, setProgressBar] = useState(0)
+	const [topicsToShow, setTopicsToShow] = useState([])
+	const [dt, setDt] = useState(new Date().toLocaleString())
+
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	// console.log('DashboardScreen -> user', user)
 	const summary = useSelector(selectUserSummaries)
-	// console.log('DashboardScreen -> summary', summary)
 	const { topics } = useSelector(selectTopics)
-	console.log('DashboardScreen -> topics', topics)
-	// const topic = useSelector(selectTopicDetails)
-	// console.log('DashboardScreen -> topic', topic)
 	const { userTopics } = useSelector(selectUserTopics)
-	console.log('DashboardScreen -> userTopics', userTopics)
+
+	useEffect(() => {
+		let secTimer = setInterval(() => {
+			setDt(new Date().toLocaleString())
+		}, 1000)
+
+		return () => clearInterval(secTimer)
+	}, [])
+
+	let userRegDate = user ? user.createdAt : ''
+	let myDate = new Date(userRegDate)
+	const weekId = myDate.getWeek().toString()
+	const filteredTopics = topics.filter((t) => {
+		return Number(t.week) === parseInt(weekId)
+	})
+
+	useEffect(() => {
+		setTopicsToShow(filteredTopics)
+	}, [topics])
 
 	useEffect(() => {
 		dispatch(fetchUserTopics())
@@ -73,7 +94,9 @@ export default function DashboardScreen({ navigation }) {
 									Welcome {user.name} - class {user.classNumber}!
 								</Text>
 								<Text style={styles.datetimeText}>
-									{moment().format('MMM Do YYYY')} - {moment().format('LT')}
+									{moment(dt).format('MMM Do YYYY, h:mm:ss a')}
+									{/* {moment(dt).format('llll')} */}
+									{/* {moment().format('MMM Do YYYY')} - {moment().format('LT')} */}
 								</Text>
 							</Col>
 						</Row>
@@ -82,108 +105,113 @@ export default function DashboardScreen({ navigation }) {
 					)}
 				</Card>
 				<View style={{ width: 400, marginTop: 10 }}>
-					<ProgressBar style={{ marginBottom: 5 }} height={10} value={80} />
+					<ProgressBar
+						style={{ marginBottom: 5 }}
+						height={10}
+						value={progressBar}
+					/>
 					<Text style={styles.smallText}>Your progress</Text>
 					<View style={{ height: 20 }} />
 				</View>
 
-        <View>
-          <Row content="space-between">
-            <Card
-              // height={550}
-              bordered
-              rounded
-              style={{
-                width: 225,
-                height: 225,
-                shadowOffset: { width: 2, height: 2 },
-                shadowColor: "#333",
-                shadowOpacity: 0.3,
-                shadowRadius: 2,
-              }}
-            >
-              <Col>
-                <View style={{ height: 30 }} />
-                <Text style={styles.headerText}>Topics this week</Text>
-                <View style={{ height: 15 }} />
-                <Text style={styles.smallText}>Value 2</Text>
-                <Text style={styles.smallText}>Value 3</Text>
-                <View style={{ height: 20 }} />
-                <Button
-                  buttonStyle={styles.btn}
-                  title="Topics this week"
-                  outline
-                  raised
-                  onPress={() => navigation.navigate("Topics")}
-                />
-              </Col>
-            </Card>
-            <Card
-              // height={400}
-              bordered
-              rounded
-              style={{
-                width: 225,
-                height: 225,
-                shadowOffset: { width: 2, height: 2 },
-                shadowColor: "#333",
-                shadowOpacity: 0.3,
-                shadowRadius: 2,
-              }}
-            >
-              <Col>
-                <View style={{ height: 30 }} />
-                <Text style={styles.headerText}>Your Summaries</Text>
-                <View style={{ height: 15 }} />
-                {summary ? (
-                  summary.map((s) => {
-                    return (
-                      <Button
-                        key={s.id}
-                        title={s.description}
-                        outline
-                        raised
-                        onPress={() =>
-                          navigation.navigate("TopicDetail", {
-                            id: s.id,
-                          })
-                        }
-                      />
-                    );
-                  })
-                ) : (
-                  <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
-                )}
-                <View style={{ height: 20 }} />
-                <Button
-                  buttonStyle={styles.btn}
-                  title="See Summary List"
-                  outline
-                  raised
-                  onPress={() => navigation.navigate("Summaries")}
-                />
-              </Col>
-            </Card>
-          </Row>
-        </View>
-        <View style={{ height: 20 }} />
+				<View>
+					<Row content='space-between'>
+						<Card
+							bordered
+							rounded
+							style={{
+								width: 225,
+								height: 225,
+								shadowOffset: { width: 2, height: 2 },
+								shadowColor: '#333',
+								shadowOpacity: 0.3,
+								shadowRadius: 2,
+							}}
+						>
+							<Col>
+								<View style={{ height: 30 }} />
+								<Text style={styles.headerText}>Topics of week #{weekId}</Text>
+								<Text style={styles.smallTextBlue}>Tap to find out more</Text>
+								<View style={{ height: 15 }} />
+								{topicsToShow ? (
+									topicsToShow.map((t) => {
+										return (
+											<View key={t.id}>
+												<Button
+													buttonStyle={styles.btn}
+													title={t.name}
+													onPress={() =>
+														navigation.navigate('TopicDetail', {
+															id: t.id,
+														})
+													}
+													outline
+												/>
+											</View>
+										)
+									})
+								) : (
+									<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
+								)}
+								<View style={{ height: 20 }} />
+								{/* <Button
+									buttonStyle={styles.btn}
+									title='Topics this week'
+									outline
+									raised
+									onPress={() => navigation.navigate('Topics')}
+								/> */}
+							</Col>
+						</Card>
+						<Card
+							bordered
+							rounded
+							style={{
+								width: 225,
+								height: 225,
+								shadowOffset: { width: 2, height: 2 },
+								shadowColor: '#333',
+								shadowOpacity: 0.3,
+								shadowRadius: 2,
+							}}
+						>
+							<Col>
+								<View style={{ height: 30 }} />
+								<Text style={styles.headerText}>Your Summaries</Text>
+								<View style={{ height: 15 }} />
+								{summary ? (
+									summary.map((s) => {
+										return (
+											<Button
+												key={s.id}
+												title={s.description}
+												outline
+												raised
+												onPress={() =>
+													navigation.navigate('TopicDetail', {
+														id: s.id,
+													})
+												}
+											/>
+										)
+									})
+								) : (
+									<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
+								)}
+								<View style={{ height: 20 }} />
+								<Button
+									buttonStyle={styles.btn}
+									title='See Summary List'
+									outline
+									raised
+									onPress={() => navigation.navigate('Summaries')}
+								/>
+							</Col>
+						</Card>
+					</Row>
+				</View>
+				<View style={{ height: 20 }} />
 
-<<<<<<< HEAD
-        <Button
-          buttonStyle={styles.btn}
-          title="Log Out"
-          outline
-          raised
-          onPress={
-            () => onPress(logOut())
-            // navigation.push("/login")
-          }
-        />
-        <View style={{ height: 500 }} />
-      </View>
-    </ScrollView>
-  );
-=======
 				<Button
 					buttonStyle={styles.btn}
 					title='Log Out'
@@ -195,51 +223,50 @@ export default function DashboardScreen({ navigation }) {
 			</View>
 		</ScrollView>
 	)
->>>>>>> b726de817c4097bbc5cf60d918a2489def71eb9a
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  datetimeText: {
-    // fontFamily: 'Roboto-Light',
-    fontSize: 15,
-    marginBottom: 10,
-  },
-  titleText: {
-    // fontFamily: 'Roboto-Light',
-    fontSize: 25,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  headerText: {
-    // fontFamily: 'Roboto-Light',
-    color: "#1b48ee",
-    fontSize: 20,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  smallText: {
-    // fontFamily: 'Roboto-Light',
-    fontSize: 15,
-    // marginBottom: 10,
-    textAlign: "center",
-  },
-  card: {
-    borderRadius: 6,
-    elevation: 3,
-    backgroundColor: "#fff",
-    shadowOffset: { width: 2, height: 2 },
-    shadowColor: "#333",
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    marginHorizontal: 4,
-    marginVertical: 6,
-    width: "225",
-    height: "225",
-  },
-});
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	datetimeText: {
+		fontSize: 15,
+		marginBottom: 10,
+	},
+	titleText: {
+		fontSize: 25,
+		marginBottom: 10,
+		textAlign: 'center',
+	},
+	headerText: {
+		color: '#1b48ee',
+		fontSize: 20,
+		marginBottom: 10,
+		textAlign: 'center',
+	},
+	smallText: {
+		fontSize: 15,
+		textAlign: 'center',
+	},
+	smallTextBlue: {
+		color: '#1b48ee',
+		fontSize: 15,
+		textAlign: 'center',
+	},
+	card: {
+		borderRadius: 6,
+		elevation: 3,
+		backgroundColor: '#fff',
+		shadowOffset: { width: 2, height: 2 },
+		shadowColor: '#333',
+		shadowOpacity: 0.3,
+		shadowRadius: 2,
+		marginHorizontal: 4,
+		marginVertical: 6,
+		width: '225',
+		height: '225',
+	},
+})
