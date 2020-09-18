@@ -37,32 +37,27 @@ export default function TopicDetailScreen({ route, navigation }) {
     // console.log("Text is now:", );
     setText(" ");
   };
+  
+  console.log("UserTopics:", userTopics)
+  console.log("TOPIC", topic)
+
+  const relatedUserTopic = userTopics ? userTopics.find((top) => {
+    return top.topicId === topic.id
+  }) : null
+
+  console.log("RELATEDUSERTOPIC", relatedUserTopic)
 
   return (
     <View style={styles.container}>
       <Card bordered rounded>
         <Text>Your Topics: </Text>
         <Text>
-          {userTopics ? (
-            userTopics.map((t) => {
-              const newTopic = topics
-                ? topics.find((top) => {
-                    return parseInt(top.id) === parseInt(t.topicId);
-                  })
-                : null;
-
-              return (
-                <View>
-                  <Text>
-                    {newTopic && newTopic.name ? newTopic.name : null}
-                  </Text>
-                  <Text>Is it done? {t.isDone ? "yes" : "no"}</Text>
-                </View>
-              );
-            })
-          ) : (
-            <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
-          )}
+          <Text>
+            {topic.name}
+          </Text>
+          <Text>
+            Status: {relatedUserTopic ? (relatedUserTopic.isDone ? "Done" : "To Do") : null}
+          </Text>
         </Text>
         <Divider bgColor="#ff0000" />
         <Text> </Text>
@@ -102,3 +97,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+// {userTopics ? (
+//   userTopics.map((t) => {
+//     const newTopic = topics
+//       ? topics.find((top) => {
+//           return parseInt(top.id) === parseInt(t.topicId);
+//         })
+//       : null;
+//     return (
+//       <View>
+//         <Text>
+//           {newTopic && newTopic.name ? newTopic.name : null}
+//         </Text>
+//         <Text>Is it done? {topic.isDone ? "yes" : "no"}</Text>
+//       </View>
+//     );
+//   })
+// ) : (
+//   <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
+// )}
