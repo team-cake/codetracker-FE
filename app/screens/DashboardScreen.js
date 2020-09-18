@@ -28,6 +28,8 @@ export default function DashboardScreen({ navigation }) {
 	const { topics } = useSelector(selectTopics)
 	const { userTopics } = useSelector(selectUserTopics)
 
+	const progressPercentage = Math.floor(progressBar * 100)
+
 	useEffect(() => {
 		let totalLength = topics.length
 		console.log('DashboardScreen -> totalLength', totalLength)
@@ -131,13 +133,15 @@ export default function DashboardScreen({ navigation }) {
 					<Card>
 						<Row content='space-between'>
 							<Col>
-								<Text style={styles.smallText}>0 %</Text>
+								<Text style={styles.smallText}>Noob</Text>
 							</Col>
 							<Col>
-								<Text style={styles.smallText}>Your progress</Text>
+								<Text style={styles.smallText}>
+									Your progress ({progressPercentage}%)
+								</Text>
 							</Col>
 							<Col>
-								<Text style={styles.smallText}>100 %</Text>
+								<Text style={styles.smallText}>FS Dev</Text>
 							</Col>
 						</Row>
 					</Card>
