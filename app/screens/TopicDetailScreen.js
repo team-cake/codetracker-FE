@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTopicById } from "../store/topicDetails/actions";
 import { fetchUserTopics, addingUserTopic } from "../store/userTopics/actions";
 import { selectTopics } from "../store/topics/selectors";
 import { selectUser } from "../store/user/selectors";
 import { selectTopicDetails } from "../store/topicDetails/selectors";
-import { Button, Card, Divider, Spinner } from "monalisa-ui";
+import { Button, Card, Divider, Spinner, Textarea, Text } from "monalisa-ui";
 import { selectUserTopics } from "../store/userTopics/selectors";
 import { createSummary } from "../store/summary/actions";
+
 // import { utc } from "moment";
 
 export default function TopicDetailScreen({ route, navigation }) {
@@ -20,7 +21,6 @@ export default function TopicDetailScreen({ route, navigation }) {
   const { userTopics } = useSelector(selectUserTopics);
   const [topicName, setTopicName] = useState(" ");
   const [text, setText] = useState(" ");
-  console.log("TopicDetailScreen -> text", text);
 
   useEffect(() => {
     dispatch(fetchTopicById(id));
@@ -34,51 +34,64 @@ export default function TopicDetailScreen({ route, navigation }) {
   const onPress = (event) => {
     event.preventDefault();
     dispatch(createSummary(text, user.id, topic.id));
-    // console.log("Text is now:", );
+
     setText(" ");
   };
-  
-  console.log("UserTopics:", userTopics)
-  console.log("TOPIC", topic)
 
-  const relatedUserTopic = userTopics ? userTopics.find((top) => {
-    return top.topicId === topic.id
-  }) : null
-
-  console.log("RELATEDUSERTOPIC", relatedUserTopic)
+  const relatedUserTopic = userTopics
+    ? userTopics.find((top) => {
+        return top.topicId === topic.id;
+      })
+    : null;
 
   return (
     <View style={styles.container}>
-      <Card bordered rounded>
-        <Text>Your Topics: </Text>
+      <Text h2>{topic.name}</Text>
+      <View style={{ height: 20 }} />
+      <Card
+        bordered
+        style={{
+          width: 250,
+          height: 400,
+          shadowOffset: { width: 2, height: 2 },
+          shadowColor: "#333",
+          shadowOpacity: 0.3,
+          shadowRadius: 2,
+          borderRadius: 6,
+        }}
+      >
         <Text>
           <Text>
-            {topic.name}
+            Status:{" "}
+            {relatedUserTopic
+              ? relatedUserTopic.isDone
+                ? "Done"
+                : "To Do"
+              : null}
           </Text>
-          <Text>
-            Status: {relatedUserTopic ? (relatedUserTopic.isDone ? "Done" : "To Do") : null}
-          </Text>
+          <View style={{ height: 30 }} />
         </Text>
         <Divider bgColor="#ff0000" />
-        <Text> </Text>
-      </Card>
 
-      <Card bordered rounded>
-        <Text>🚀 {topic.name}</Text>
+        <Text h6>
+          🚀 <em>{topic.name}</em>
+        </Text>
         <Divider bgColor="#ff0000" />
-        <Text> {topic.description}</Text>
-      </Card>
+        <Text> 🔹{topic.description}</Text>
+        <View style={{ height: 40 }} />
+        <Text>
+          <strong>Create your summary:</strong>{" "}
+        </Text>
 
-      <Card>
-        <Text>Create your summary: </Text>
-        <TextInput
-          style={{ height: 40 }}
+        <Textarea
+          borderColor="#ff0000"
+          style={{ height: 100 }}
           placeholder="type your summary"
           value={text}
           onChange={(event) => setText(event.target.value)}
           maxLength={100}
         />
-        <Button title="Submit Summary" onPress={onPress} />
+        <Button title="Submit Summary" onPress={onPress} outline />
       </Card>
       <Button
         title="Back to Topics"
@@ -97,23 +110,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-// {userTopics ? (
-//   userTopics.map((t) => {
-//     const newTopic = topics
-//       ? topics.find((top) => {
-//           return parseInt(top.id) === parseInt(t.topicId);
-//         })
-//       : null;
-//     return (
-//       <View>
-//         <Text>
-//           {newTopic && newTopic.name ? newTopic.name : null}
-//         </Text>
-//         <Text>Is it done? {topic.isDone ? "yes" : "no"}</Text>
-//       </View>
-//     );
-//   })
-// ) : (
-//   <Spinner titleStyle={{ fontSize: 16 }} title="Loading..." />
-// )}
