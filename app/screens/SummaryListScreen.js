@@ -23,7 +23,7 @@ export default function SummaryListScreen({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.small}>SummaryListScreen</Text>
+			<Text style={styles.titleText}>List of your summaries</Text>
 			<View style={{ height: 20 }} />
 			{/* <Text>Below are the summaries of all users</Text>
 			{summaries ? (
@@ -43,8 +43,7 @@ export default function SummaryListScreen({ navigation }) {
 			) : (
 				<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
 			)} */}
-			<View style={{ height: 20 }} />
-			<Text>Here below is {user.name}'s summary</Text>
+			{/* <View style={{ height: 20 }} /> */}
 			{summary ? (
 				summary.map((s) => {
 					return (
@@ -62,6 +61,8 @@ export default function SummaryListScreen({ navigation }) {
 			) : (
 				<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
 			)}
+			<View style={{ height: 20 }} />
+			<Text style={styles.smallTextBlue}>Tap to read your summary</Text>
 			<View style={{ height: 220 }} />
 		</View>
 	)
@@ -74,7 +75,14 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	small: {
-		fontSize: 30,
+	smallTextBlue: {
+		color: '#1b48ee',
+		fontSize: 15,
+		textAlign: 'center',
+	},
+	titleText: {
+		fontSize: 25,
+		marginBottom: 10,
+		textAlign: 'center',
 	},
 })

@@ -165,7 +165,6 @@ export default function DashboardScreen({ navigation }) {
 							<Col>
 								<View style={{ height: 30 }} />
 								<Text style={styles.headerText}>Topics of week #{weekId}</Text>
-								<Text style={styles.smallTextBlue}>Tap to find out more</Text>
 								<View style={{ height: 15 }} />
 								{topicsToShow ? (
 									topicsToShow.map((t) => {
@@ -188,6 +187,8 @@ export default function DashboardScreen({ navigation }) {
 									<Spinner titleStyle={{ fontSize: 16 }} title='Loading...' />
 								)}
 								<View style={{ height: 20 }} />
+								<Text style={styles.smallTextBlue}>Tap to find out more</Text>
+
 								{/* <Button
 									buttonStyle={styles.btn}
 									title='Topics this week'
