@@ -1,4 +1,4 @@
-# Codetracker - The progress app made for students
+# Codetracker - The progress app made for developer students
 
 Codetracker is the progress and journaling app tailor made to the course which the developer student is following.
 At the moment it is built for Codaisseur students: it provides the course information, option to add summaries and to see the progress the student has built so far.
@@ -21,13 +21,12 @@ At the moment it is built for Codaisseur students: it provides the course inform
 
 ## Statement of Purpose
 
-Coding and developing is so much fun.  
-But at times it can also get tedious, tiring or even stressful. Work-related mental health issues and anxieties are not uncommon among tech companies.  
-According to the Stack Overflow 2018 survey, mental health issues like depression and anxiety are common amongst the respondents.  
-The largest percentage reported a mood or emotional disorder. It is slowly coming out of the taboo corner to talk about these issues.  
-I understand what it feels like to be under such pressure and it's great to be able to reflect.  
-Looking around me, there are a lot of people still struggling and not knowing how to deal with these issues.  
-I hope this app will help them a little bit.
+Being a student is a lot of fun.  
+But at times it can get chaotic and you feel kind of lost.  
+How far along am I? What else will be there for me? Am I making any progress?
+
+This is why we have created Codetracker.  
+Codetracker helps the developer student keep track of his progress, while being able to add summaries to the topics the student cares about. All in all, Codetracker should help create an overview for the student, so the student can concentrate on learning.
 
 ---
 
